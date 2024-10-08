@@ -1,0 +1,694 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "36d15c1fd584fe5d",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "MQTT PROXIMIDADE OUT",
+        "topic": "ESP32_PROXIMIDADE_IOT_IFSP",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "a30de38252504e3a",
+        "x": 500,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "de7ebf6b9592089a",
+        "type": "postgresql",
+        "z": "f6f2187d.f17ca8",
+        "name": "POSTGRES PROXIMIDADE",
+        "query": "INSERT INTO SENSOR_PROXIMIDADE (VALOR) VALUES ('{{msg.payload}}');\n\n\nSELECT valor, data_hora FROM SENSOR_PROXIMIDADE ORDER BY data_hora DESC LIMIT 10;",
+        "postgreSQLConfig": "8b6d03b60dd43897",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 1360,
+        "y": 480,
+        "wires": [
+            [
+                "960c38b7393cfa51"
+            ]
+        ]
+    },
+    {
+        "id": "869bbf272a656133",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "MQTT PROXIMIDADE IN",
+        "topic": "ESP32_PROXIMIDADE_IOT_IFSP",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "a30de38252504e3a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 750,
+        "y": 480,
+        "wires": [
+            [
+                "575fdab0533fcbf4",
+                "df9694fef6a78bfb"
+            ]
+        ]
+    },
+    {
+        "id": "575fdab0533fcbf4",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "FUNCTION PROXIMIDADE",
+        "func": "if (msg.payload && !isNaN(Number(msg.payload))) {\n    const valor = Number(msg.payload);\n    msg.payload = valor;\n    return msg;\n} else {\n    node.warn(\"Payload vazio ou não numérico\");\n    return null;\n}\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 480,
+        "wires": [
+            [
+                "de7ebf6b9592089a"
+            ]
+        ]
+    },
+    {
+        "id": "a24a3742612c9b23",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "x": 250,
+        "y": 480,
+        "wires": [
+            [
+                "36d15c1fd584fe5d"
+            ]
+        ]
+    },
+    {
+        "id": "ce933f4e63b55717",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "x": 250,
+        "y": 720,
+        "wires": [
+            [
+                "c655b12c531d9740"
+            ]
+        ]
+    },
+    {
+        "id": "c655b12c531d9740",
+        "type": "mqtt out",
+        "z": "f6f2187d.f17ca8",
+        "name": "MQTT GIRO OUT",
+        "topic": "ESP32_GIRO_IOT_IFSP",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "a30de38252504e3a",
+        "x": 470,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "32bd127fa4ad1e60",
+        "type": "mqtt in",
+        "z": "f6f2187d.f17ca8",
+        "name": "MQTT GIRO IN",
+        "topic": "ESP32_GIRO_IOT_IFSP",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "a30de38252504e3a",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 700,
+        "y": 720,
+        "wires": [
+            [
+                "629990419c3114b2",
+                "08231db270e396a8"
+            ]
+        ]
+    },
+    {
+        "id": "629990419c3114b2",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "FUNCTION GIRO",
+        "func": "if (msg.payload && !isNaN(Number(msg.payload))) {\n    const valor = Number(msg.payload);\n    msg.payload = valor;\n    return msg;\n} else {\n    node.warn(\"Payload vazio ou não numérico\");\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 720,
+        "wires": [
+            [
+                "8a102b7a181369d4"
+            ]
+        ]
+    },
+    {
+        "id": "8a102b7a181369d4",
+        "type": "postgresql",
+        "z": "f6f2187d.f17ca8",
+        "name": "POSTGRES GIRO",
+        "query": "INSERT INTO SENSOR_GIRO (VALOR) VALUES ('{{msg.payload}}');\n\nSELECT valor, data_hora FROM SENSOR_GIRO ORDER BY data_hora DESC LIMIT 10;",
+        "postgreSQLConfig": "8b6d03b60dd43897",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 1210,
+        "y": 720,
+        "wires": [
+            [
+                "3450ce096605ef0b"
+            ]
+        ]
+    },
+    {
+        "id": "960c38b7393cfa51",
+        "type": "ui_template",
+        "z": "f6f2187d.f17ca8",
+        "group": "cfdff6daed8ae41b",
+        "name": "Tabela Próximidade",
+        "order": 2,
+        "width": 6,
+        "height": "8",
+        "format": "<style>\n    table.custom-table {\n        width: 100%;\n        border-collapse: collapse;\n        font-family: Arial, sans-serif;\n    }\n\n    table.custom-table th,\n    table.custom-table td {\n        padding: 8px;\n        text-align: center;\n        border: 1px solid #ddd;\n    }\n\n    table.custom-table th {\n        background-color: #f2f2f2;\n    }\n\n    table.custom-table tr:nth-child(even) {\n        background-color: #f9f9f9;\n    }\n\n    table.custom-table tr:hover {\n        background-color: #f1f1f1;\n    }\n</style>\n\n<table class=\"custom-table\">\n    <thead>\n        <tr>\n            <th>Valor</th>\n            <th>Data/Hora</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr ng-repeat=\"row in msg.payload\">\n            <td>{{row.valor}} cm</td>\n            <td>{{row.data_hora | date:'dd/MM/yyyy HH:mm:ss'}}</td>\n        </tr>\n    </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1610,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "df9694fef6a78bfb",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "cfdff6daed8ae41b",
+        "order": 1,
+        "width": 6,
+        "height": "6",
+        "gtype": "gage",
+        "title": "",
+        "label": "cm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1010,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "08231db270e396a8",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "cd443923243062d3",
+        "order": 1,
+        "width": 6,
+        "height": 6,
+        "gtype": "compass",
+        "title": "",
+        "label": "Giro",
+        "format": "{{value}}",
+        "min": "-1000",
+        "max": "1000",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 960,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "3450ce096605ef0b",
+        "type": "ui_template",
+        "z": "f6f2187d.f17ca8",
+        "group": "cd443923243062d3",
+        "name": "Tabela Giro",
+        "order": 1,
+        "width": "6",
+        "height": "8",
+        "format": "<style>\n    table.custom-table {\n        width: 100%;\n        border-collapse: collapse;\n        font-family: Arial, sans-serif;\n    }\n\n    table.custom-table th,\n    table.custom-table td {\n        padding: 8px;\n        text-align: center;\n        border: 1px solid #ddd;\n    }\n\n    table.custom-table th {\n        background-color: #f2f2f2;\n    }\n\n    table.custom-table tr:nth-child(even) {\n        background-color: #f9f9f9;\n    }\n\n    table.custom-table tr:hover {\n        background-color: #f1f1f1;\n    }\n</style>\n\n<table class=\"custom-table\">\n    <thead>\n        <tr>\n            <th>Valor</th>\n            <th>Data/Hora</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr ng-repeat=\"row in msg.payload\">\n            <td>{{row.valor}}</td>\n            <td>{{row.data_hora | date:'dd/MM/yyyy HH:mm:ss'}}</td>\n        </tr>\n    </tbody>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1450,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b0dba5dd474a450f",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "Próximidade",
+        "url": "/proximidade",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 250,
+        "y": 200,
+        "wires": [
+            [
+                "d3aec6c6b7ec48fd"
+            ]
+        ]
+    },
+    {
+        "id": "d821a08f2ce7fd85",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Function GET Proximidade",
+        "func": "// Verificar se o payload contém dados\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Criar um array para armazenar os dados formatados\n    var resultadoFormatado = [];\n\n    // Loop para processar cada objeto no array retornado da consulta SQL\n    msg.payload.forEach(function(item) {\n        resultadoFormatado.push({\n            id: item.id,                         // Campo 'id' da consulta\n            valor: item.valor,                   // Campo 'valor' da consulta\n            data_hora: new Date(item.data_hora).toLocaleString('pt-BR', { \n                year: 'numeric', \n                month: '2-digit', \n                day: '2-digit', \n                hour: '2-digit', \n                minute: '2-digit', \n                second: '2-digit' \n            })                                   // Formatação para 'dd/MM/yyyy HH:mm:ss'\n        });\n    });\n\n    // Retornar o array como parte do objeto JSON com o nome \"proximidade\"\n    msg.payload = {\n        proximidade: resultadoFormatado\n    };\n} else {\n    // Se não houver dados, retornar uma mensagem de erro ou payload vazio\n    msg.payload = {\n        error: \"Nenhum dado encontrado\"\n    };\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 200,
+        "wires": [
+            [
+                "9c423c2fd8654736"
+            ]
+        ]
+    },
+    {
+        "id": "9cf36d4cd33b86c5",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "Monitoramento",
+        "url": "/monitoramento",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 260,
+        "y": 60,
+        "wires": [
+            [
+                "e9fa04511ad23c48"
+            ]
+        ]
+    },
+    {
+        "id": "e9fa04511ad23c48",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Function GET Monitoramento",
+        "func": "msg.payload = {\n    status: \"online\",\n    timestamp: new Date().toISOString(),\n    message: \"Monitoramento do app Android\"\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 60,
+        "wires": [
+            [
+                "a1b35e82ce308e7b"
+            ]
+        ]
+    },
+    {
+        "id": "d3aec6c6b7ec48fd",
+        "type": "postgresql",
+        "z": "f6f2187d.f17ca8",
+        "name": "POSTGRES PROXIMIDADE",
+        "query": "SELECT id, valor, data_hora FROM SENSOR_PROXIMIDADE ORDER BY id DESC LIMIT 10;",
+        "postgreSQLConfig": "8b6d03b60dd43897",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 520,
+        "y": 200,
+        "wires": [
+            [
+                "d821a08f2ce7fd85"
+            ]
+        ]
+    },
+    {
+        "id": "ef631ff7b184e10e",
+        "type": "http in",
+        "z": "f6f2187d.f17ca8",
+        "name": "Giro",
+        "url": "/giro",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 230,
+        "y": 320,
+        "wires": [
+            [
+                "f40d555a8b0819fe"
+            ]
+        ]
+    },
+    {
+        "id": "f40d555a8b0819fe",
+        "type": "postgresql",
+        "z": "f6f2187d.f17ca8",
+        "name": "POSTGRES GIRO",
+        "query": "SELECT id, valor, data_hora FROM SENSOR_GIRO ORDER BY id DESC LIMIT 10;",
+        "postgreSQLConfig": "8b6d03b60dd43897",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 490,
+        "y": 320,
+        "wires": [
+            [
+                "ba49e52ae71fd03e"
+            ]
+        ]
+    },
+    {
+        "id": "ba49e52ae71fd03e",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Function GET Giro",
+        "func": "// Verificar se o payload contém dados\nif (Array.isArray(msg.payload) && msg.payload.length > 0) {\n    // Criar um array para armazenar os dados formatados\n    var resultadoFormatado = [];\n\n    // Loop para processar cada objeto no array retornado da consulta SQL\n    msg.payload.forEach(function(item) {\n        resultadoFormatado.push({\n            id: item.id,                         // Campo 'id' da consulta\n            valor: item.valor,                   // Campo 'valor' da consulta\n            data_hora: new Date(item.data_hora).toLocaleString('pt-BR', { \n                year: 'numeric', \n                month: '2-digit', \n                day: '2-digit', \n                hour: '2-digit', \n                minute: '2-digit', \n                second: '2-digit' \n            })                                   // Formatação para 'dd/MM/yyyy HH:mm:ss'\n        });\n    });\n\n    // Retornar o array como parte do objeto JSON com o nome \"giro\"\n    msg.payload = {\n        giro: resultadoFormatado\n    };\n} else {\n    // Se não houver dados, retornar uma mensagem de erro ou payload vazio\n    msg.payload = {\n        error: \"Nenhum dado encontrado\"\n    };\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 320,
+        "wires": [
+            [
+                "757afbdcf8735b46"
+            ]
+        ]
+    },
+    {
+        "id": "c9ab1f70b03bd47a",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Debug GET Monitoramento",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "2a6f28b48c7be261",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Debug GET Proximidade",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1110,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "fd7b6ac787dc4241",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Debug GET Giro",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1090,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ddb9a38def0bf8a4",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "GETS",
+        "info": "GETS",
+        "x": 70,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "95881dc010515a94",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Proximidade",
+        "info": "",
+        "x": 90,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "0639ab711de1de52",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Giro",
+        "info": "",
+        "x": 70,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "a1b35e82ce308e7b",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "Response Monitoramento",
+        "statusCode": "",
+        "headers": {},
+        "x": 850,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "9c423c2fd8654736",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "Response Proximidade",
+        "statusCode": "",
+        "headers": {},
+        "x": 1110,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "757afbdcf8735b46",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "Response HTTP Giro",
+        "statusCode": "",
+        "headers": {},
+        "x": 1100,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "892769108fc017a6",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Debug Proximidade",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1050,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "2c26ca7f3d1c7d57",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Debug Giro",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "a30de38252504e3a",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "8b6d03b60dd43897",
+        "type": "postgreSQLConfig",
+        "name": "Postgres",
+        "host": "172.18.0.4",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "postgres",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "admin",
+        "userFieldType": "str",
+        "password": "admin123",
+        "passwordFieldType": "str"
+    },
+    {
+        "id": "cfdff6daed8ae41b",
+        "type": "ui_group",
+        "name": "Proximidade",
+        "tab": "cdfdb413ddfc44e7",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cd443923243062d3",
+        "type": "ui_group",
+        "name": "Giro",
+        "tab": "cdfdb413ddfc44e7",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cdfdb413ddfc44e7",
+        "type": "ui_tab",
+        "name": "Dashboard ESP32 ",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
