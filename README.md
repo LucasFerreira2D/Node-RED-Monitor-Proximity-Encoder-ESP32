@@ -35,15 +35,17 @@ Pré-requisitos
 
 **Estrutura de Dados**
 
-Tabela SENSOR_PROXIMIDADE:
-* id: Identificador único.
-* valor: Valor do sensor de proximidade.
-* data_hora: Data e hora da leitura.
-  
-Tabela SENSOR_GIRO:
-* id: Identificador único.
-* valor: Valor do sensor de giroscópio.
-* data_hora: Data e hora da leitura.
+CREATE TABLE SENSOR_PROXIMIDADE (
+    id SERIAL PRIMARY KEY,
+    valor FLOAT NOT NULL,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE SENSOR_GIRO (
+    id SERIAL PRIMARY KEY,
+    valor FLOAT NOT NULL,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 **Instalação e Configuração**
 
