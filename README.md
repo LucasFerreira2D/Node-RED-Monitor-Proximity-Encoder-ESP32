@@ -94,6 +94,10 @@ Endpoints HTTP
 
 GET /proximidade:
 
+
+![image](https://github.com/user-attachments/assets/2ff873e0-9711-41b3-8ff1-54891d8d10d2)
+
+
 {
     "proximidade": [
         {
@@ -110,6 +114,8 @@ GET /proximidade:
 }
 
 GET /giro:
+
+![image](https://github.com/user-attachments/assets/4398912e-4b3c-4322-881f-24bd134aa956)
 
 {
     "giro": [
