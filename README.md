@@ -35,17 +35,8 @@ Pré-requisitos
 
 **Estrutura de Dados**
 
-CREATE TABLE SENSOR_PROXIMIDADE (
-    id SERIAL PRIMARY KEY,
-    valor FLOAT NOT NULL,
-    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+![image](https://github.com/user-attachments/assets/236af385-a9c5-41b0-b4ec-144781682c97)
 
-CREATE TABLE SENSOR_GIRO (
-    id SERIAL PRIMARY KEY,
-    valor FLOAT NOT NULL,
-    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 **Instalação e Configuração**
 
